@@ -1,0 +1,1 @@
+This is my initial portfolio project. Some features might not function as I have to upload this project within the deadline and I ran out of time to complete those feature. It does, however, function as a minimum viable product. 
