@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>John Ronald | Front-End Developer</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#4A9D9D',secondary:'#2C3E50'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #1A1A1A;
+            color: #F5F5F5;
+        }
+        
+        .section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        
+        .custom-checkbox {
+            position: relative;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .custom-checkbox input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background-color: #2A2A2A;
+            border: 1px solid #4A9D9D;
+            border-radius: 4px;
+        }
+        
+        .custom-checkbox input:checked ~ .checkmark {
+            background-color: #4A9D9D;
+        }
+        
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+        
+        .custom-checkbox input:checked ~ .checkmark:after {
+            display: block;
+        }
+        
+        .custom-checkbox .checkmark:after {
+            left: 7px;
+            top: 3px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #2A2A2A;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #4A9D9D;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        .range-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #2A2A2A;
+            outline: none;
+        }
+        
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4A9D9D;
+            cursor: pointer;
+        }
+        
+        .range-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4A9D9D;
+            cursor: pointer;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <header class="fixed top-0 left-0 right-0 bg-[#1A1A1A] shadow-md z-50">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="text-2xl font-['Pacifico'] text-primary">
+                <a href="#home" class="text-primary hover:text-opacity-80 transition-colors">John Ronald</a>
+            </div>
+            
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="nav-link text-white hover:text-primary transition-colors">Home</a>
+                <a href="#about" class="nav-link text-white hover:text-primary transition-colors">About</a>
+                <a href="#projects" class="nav-link text-white hover:text-primary transition-colors">Projects</a>
+                <a href="#contact" class="nav-link text-white hover:text-primary transition-colors">Contact</a>
+            </div>
+            
+            <div class="md:hidden flex items-center">
+                <button id="menu-toggle" class="text-white hover:text-primary transition-colors w-8 h-8 flex items-center justify-center">
+                    <i class="ri-menu-line ri-2x"></i>
+                </button>
+            </div>
+        </nav>
+        
+        <div id="mobile-menu" class="hidden md:hidden bg-[#1A1A1A] shadow-lg">
+            <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
+                <a href="#home" class="mobile-nav-link text-white hover:text-primary transition-colors py-2">Home</a>
+                <a href="#about" class="mobile-nav-link text-white hover:text-primary transition-colors py-2">About</a>
+                <a href="#projects" class="mobile-nav-link text-white hover:text-primary transition-colors py-2">Projects</a>
+                <a href="#contact" class="mobile-nav-link text-white hover:text-primary transition-colors py-2">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="min-h-screen flex items-center pt-20 pb-16 section" style="background-image: url('https://readdy.ai/api/search-image?query=modern%2520minimal%2520tech%2520workspace%2520with%2520dark%2520gray%2520background%2C%2520blue%2520and%2520teal%2520accent%2520lighting%2C%2520computer%2520monitor%2520showing%2520code%2C%2520keyboard%2520and%2520coffee%2520mug%2C%2520professional%2520atmosphere%2C%2520clean%2520design%2C%2520soft%2520lighting%2C%2520high%2520quality%2520digital%2520art&width=1920&height=1080&seq=1&orientation=landscape'); background-size: cover; background-position: center;">
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="max-w-3xl bg-[#1A1A1A]/80 backdrop-blur-sm p-10 rounded-lg">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">Looking for a <span class="text-primary">Front-End Developer?</span></h1>
+                    <p class="text-xl md:text-2xl mb-10 text-gray-300">Let's build clean, accessible, and modern websites together.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#projects" class="bg-primary text-white px-8 py-3 rounded-button font-medium hover:bg-opacity-90 transition-all transform hover:-translate-y-1 whitespace-nowrap">View Work</a>
+                        <a href="#contact" class="bg-transparent border-2 border-primary text-primary px-8 py-3 rounded-button font-medium hover:bg-primary/10 transition-all transform hover:-translate-y-1 whitespace-nowrap">Contact Me</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-20 section bg-[#212121]">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center">About <span class="text-primary">Me</span></h2>
+                
+                <div class="flex flex-col md:flex-row gap-10 items-center">
+                    <div class="md:w-2/5">
+                        <div class="rounded-lg overflow-hidden shadow-xl">
+                            <img src="https://readdy.ai/api/search-image?query=professional%2520portrait%2520of%2520a%2520young%2520Filipino%2520male%2520IT%2520student%2C%2520early%252020s%2C%2520wearing%2520smart%2520casual%2520attire%2C%2520confident%2520pose%2C%2520neutral%2520background%2C%2520professional%2520lighting%2C%2520high%2520quality%2520portrait%2C%2520realistic%2520details%2C%2520professional%2520headshot&width=600&height=800&seq=2&orientation=portrait" alt="John Ronald" class="w-full h-auto object-cover">
+                        </div>
+                    </div>
+                    
+                    <div class="md:w-3/5">
+                        <h3 class="text-2xl md:text-3xl font-semibold mb-4">Hi, I'm John Ronald</h3>
+                        <p class="text-gray-300 mb-6">I'm a student front-end developer passionate about building clean and accessible websites. Currently in my final year of BSIT at STI College, I focus on creating responsive and user-friendly web experiences that combine aesthetic design with functional code.</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                            <div>
+                                <h4 class="text-xl font-semibold mb-3 text-primary">Education</h4>
+                                <ul class="space-y-2 text-gray-300">
+                                    <li class="flex items-start">
+                                        <div class="w-6 h-6 mr-2 flex items-center justify-center text-primary">
+                                            <i class="ri-graduation-cap-line"></i>
+                                        </div>
+                                        <span>STI College</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-6 h-6 mr-2 flex items-center justify-center text-primary">
+                                            <i class="ri-book-open-line"></i>
+                                        </div>
+                                        <span>BSIT, 4th Year</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-xl font-semibold mb-3 text-primary">Technical Skills</h4>
+                                <ul class="space-y-2 text-gray-300">
+                                    <li class="flex items-start">
+                                        <div class="w-6 h-6 mr-2 flex items-center justify-center text-primary">
+                                            <i class="ri-html5-line"></i>
+                                        </div>
+                                        <span>HTML5</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-6 h-6 mr-2 flex items-center justify-center text-primary">
+                                            <i class="ri-css3-line"></i>
+                                        </div>
+                                        <span>CSS3</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-6 h-6 mr-2 flex items-center justify-center text-primary">
+                                            <i class="ri-javascript-line"></i>
+                                        </div>
+                                        <span>JavaScript</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-xl font-semibold mb-3 text-primary">Tools</h4>
+                                <ul class="space-y-2 text-gray-300">
+                                    <li class="flex items-start">
+                                        <div class="w-6 h-6 mr-2 flex items-center justify-center text-primary">
+                                            <i class="ri-code-box-line"></i>
+                                        </div>
+                                        <span>VS Code</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-6 h-6 mr-2 flex items-center justify-center text-primary">
+                                            <i class="ri-pen-nib-line"></i>
+                                        </div>
+                                        <span>Figma</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-6 h-6 mr-2 flex items-center justify-center text-primary">
+                                            <i class="ri-git-branch-line"></i>
+                                        </div>
+                                        <span>Git</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-xl font-semibold mb-3 text-primary">Soft Skills</h4>
+                                <ul class="space-y-2 text-gray-300">
+                                    <li class="flex items-start">
+                                        <div class="w-6 h-6 mr-2 flex items-center justify-center text-primary">
+                                            <i class="ri-team-line"></i>
+                                        </div>
+                                        <span>Team Collaboration</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-6 h-6 mr-2 flex items-center justify-center text-primary">
+                                            <i class="ri-time-line"></i>
+                                        </div>
+                                        <span>Time Management</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-6 h-6 mr-2 flex items-center justify-center text-primary">
+                                            <i class="ri-question-answer-line"></i>
+                                        </div>
+                                        <span>Communication</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <a href="#" class="inline-block bg-primary text-white px-8 py-3 rounded-button font-medium hover:bg-opacity-90 transition-all transform hover:-translate-y-1 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <div class="w-5 h-5 mr-2 flex items-center justify-center">
+                                    <i class="ri-download-line"></i>
+                                </div>
+                                <span>Download Resume</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-20 section">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center">My <span class="text-primary">Projects</span></h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Project 1 -->
+                    <div class="project-card bg-[#212121] rounded-lg overflow-hidden shadow-lg">
+                        <div class="h-60 overflow-hidden">
+                            <img src="https://readdy.ai/api/search-image?query=modern%2520e-commerce%2520website%2520interface%2520on%2520computer%2520screen%2C%2520clean%2520design%2C%2520product%2520grid%2520layout%2C%2520shopping%2520cart%2C%2520professional%2520web%2520design%2C%2520dark%2520mode%2520UI%2C%2520blue%2520accent%2520colors%2C%2520high%2520quality%2520digital%2520mockup&width=800&height=600&seq=3&orientation=landscape" alt="E-commerce Website" class="w-full h-full object-cover object-top">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">E-commerce Website</h3>
+                            <p class="text-gray-400 mb-4">A responsive e-commerce platform built with HTML, CSS, and JavaScript. Features include product filtering, cart functionality, and responsive design.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="px-3 py-1 bg-[#2A2A2A] text-primary text-sm rounded-full">HTML</span>
+                                <span class="px-3 py-1 bg-[#2A2A2A] text-primary text-sm rounded-full">CSS</span>
+                                <span class="px-3 py-1 bg-[#2A2A2A] text-primary text-sm rounded-full">JavaScript</span>
+                            </div>
+                            <a href="#" class="inline-flex items-center text-primary hover:text-white hover:bg-primary px-4 py-2 rounded-button transition-colors whitespace-nowrap">
+                                <div class="w-5 h-5 mr-2 flex items-center justify-center">
+                                    <i class="ri-github-fill"></i>
+                                </div>
+                                <span>View on GitHub</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 2 -->
+                    <div class="project-card bg-[#212121] rounded-lg overflow-hidden shadow-lg">
+                        <div class="h-60 overflow-hidden">
+                            <img src="https://readdy.ai/api/search-image?query=weather%2520app%2520interface%2520on%2520smartphone%2520and%2520desktop%2C%2520showing%2520weather%2520forecast%2C%2520temperature%2C%2520humidity%2C%2520wind%2520speed%2C%2520clean%2520minimal%2520design%2C%2520dark%2520mode%2520UI%2520with%2520teal%2520accents%2C%2520professional%2520app%2520design%2C%2520high%2520quality%2520digital%2520mockup&width=800&height=600&seq=4&orientation=landscape" alt="Weather App" class="w-full h-full object-cover object-top">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">Weather Dashboard</h3>
+                            <p class="text-gray-400 mb-4">Interactive weather application that fetches real-time data from a weather API. Features include location search, 5-day forecast, and dynamic UI updates.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="px-3 py-1 bg-[#2A2A2A] text-primary text-sm rounded-full">HTML</span>
+                                <span class="px-3 py-1 bg-[#2A2A2A] text-primary text-sm rounded-full">CSS</span>
+                                <span class="px-3 py-1 bg-[#2A2A2A] text-primary text-sm rounded-full">JavaScript</span>
+                                <span class="px-3 py-1 bg-[#2A2A2A] text-primary text-sm rounded-full">API</span>
+                            </div>
+                            <a href="#" class="inline-flex items-center text-primary hover:text-white hover:bg-primary px-4 py-2 rounded-button transition-colors whitespace-nowrap">
+                                <div class="w-5 h-5 mr-2 flex items-center justify-center">
+                                    <i class="ri-github-fill"></i>
+                                </div>
+                                <span>View on GitHub</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 3 -->
+                    <div class="project-card bg-[#212121] rounded-lg overflow-hidden shadow-lg">
+                        <div class="h-60 overflow-hidden">
+                            <img src="https://readdy.ai/api/search-image?query=task%2520management%2520app%2520interface%2C%2520to-do%2520list%2C%2520task%2520categories%2C%2520calendar%2520view%2C%2520clean%2520minimal%2520design%2C%2520dark%2520mode%2520UI%2520with%2520blue%2520and%2520teal%2520accents%2C%2520professional%2520app%2520design%2C%2520high%2520quality%2520digital%2520mockup&width=800&height=600&seq=5&orientation=landscape" alt="Task Manager" class="w-full h-full object-cover object-top">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">Task Manager</h3>
+                            <p class="text-gray-400 mb-4">A productivity application with task management features. Users can create, edit, and delete tasks, set priorities, and track completion status.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="px-3 py-1 bg-[#2A2A2A] text-primary text-sm rounded-full">HTML</span>
+                                <span class="px-3 py-1 bg-[#2A2A2A] text-primary text-sm rounded-full">CSS</span>
+                                <span class="px-3 py-1 bg-[#2A2A2A] text-primary text-sm rounded-full">JavaScript</span>
+                                <span class="px-3 py-1 bg-[#2A2A2A] text-primary text-sm rounded-full">LocalStorage</span>
+                            </div>
+                            <a href="#" class="inline-flex items-center text-primary hover:text-white hover:bg-primary px-4 py-2 rounded-button transition-colors whitespace-nowrap">
+                                <div class="w-5 h-5 mr-2 flex items-center justify-center">
+                                    <i class="ri-github-fill"></i>
+                                </div>
+                                <span>View on GitHub</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 section bg-[#212121]">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center">Get In <span class="text-primary">Touch</span></h2>
+                
+                <div class="flex flex-col lg:flex-row gap-12">
+                    <div class="lg:w-1/2">
+                        <h3 class="text-2xl font-semibold mb-6">Send Me a Message</h3>
+                        <form id="contact-form" class="space-y-6">
+                            <div>
+                                <label for="name" class="block text-gray-300 mb-2">Name</label>
+                                <input type="text" id="name" name="name" class="w-full bg-[#2A2A2A] text-white border-none rounded p-3 focus:outline-none focus:ring-2 focus:ring-primary" required>
+                                <p id="name-error" class="text-red-500 text-sm mt-1 hidden">Please enter your name</p>
+                            </div>
+                            
+                            <div>
+                                <label for="email" class="block text-gray-300 mb-2">Email</label>
+                                <input type="email" id="email" name="email" class="w-full bg-[#2A2A2A] text-white border-none rounded p-3 focus:outline-none focus:ring-2 focus:ring-primary" required>
+                                <p id="email-error" class="text-red-500 text-sm mt-1 hidden">Please enter a valid email address</p>
+                            </div>
+                            
+                            <div>
+                                <label for="message" class="block text-gray-300 mb-2">Message</label>
+                                <textarea id="message" name="message" rows="5" class="w-full bg-[#2A2A2A] text-white border-none rounded p-3 focus:outline-none focus:ring-2 focus:ring-primary" required></textarea>
+                                <p id="message-error" class="text-red-500 text-sm mt-1 hidden">Please enter your message</p>
+                            </div>
+                            
+                            <button type="submit" class="bg-primary text-white px-8 py-3 rounded-button font-medium hover:bg-opacity-90 transition-all transform hover:-translate-y-1 whitespace-nowrap">Send Message</button>
+                        </form>
+                        
+                        <div id="form-success" class="mt-6 p-4 bg-green-900/30 border border-green-500 text-green-400 rounded hidden">
+                            Thank you for your message! I'll get back to you soon.
+                        </div>
+                    </div>
+                    
+                    <div class="lg:w-1/2">
+                        <h3 class="text-2xl font-semibold mb-6">Contact Information</h3>
+                        <p class="text-gray-300 mb-8">Feel free to reach out to me through any of these channels. I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.</p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 mr-4 flex items-center justify-center bg-primary/20 text-primary rounded-full">
+                                    <i class="ri-mail-line ri-lg"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-medium">Email</h4>
+                                    <a href="mailto:johnronald.empig@gmail.com" class="text-gray-300 hover:text-primary transition-colors">johnronald.empig@gmail.com</a>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 mr-4 flex items-center justify-center bg-primary/20 text-primary rounded-full">
+                                    <i class="ri-map-pin-line ri-lg"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-medium">Location</h4>
+                                    <p class="text-gray-300">Manila, Philippines</p>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-lg font-medium mb-4">Social Media</h4>
+                                <div class="flex space-x-4">
+                                    <a href="#" class="w-10 h-10 flex items-center justify-center bg-[#2A2A2A] text-white hover:bg-primary hover:text-white transition-colors rounded-full">
+                                        <i class="ri-github-fill ri-lg"></i>
+                                    </a>
+                                    <a href="#" class="w-10 h-10 flex items-center justify-center bg-[#2A2A2A] text-white hover:bg-primary hover:text-white transition-colors rounded-full">
+                                        <i class="ri-linkedin-fill ri-lg"></i>
+                                    </a>
+                                    <a href="#" class="w-10 h-10 flex items-center justify-center bg-[#2A2A2A] text-white hover:bg-primary hover:text-white transition-colors rounded-full">
+                                        <i class="ri-twitter-fill ri-lg"></i>
+                                    </a>
+                                    <a href="#" class="w-10 h-10 flex items-center justify-center bg-[#2A2A2A] text-white hover:bg-primary hover:text-white transition-colors rounded-full">
+                                        <i class="ri-instagram-fill ri-lg"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-[#151515] py-10">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="text-xl font-['Pacifico'] text-primary mb-4 md:mb-0">
+                    <a href="#home" class="text-primary hover:text-opacity-80 transition-colors">John Ronald</a>
+                </div>
+                
+                <div class="text-gray-400 text-center md:text-right">
+                    <p>&copy; 2025 John Ronald. All rights reserved.</p>
+                    <p class="text-sm mt-1">Front-End Developer | BSIT Student</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script id="mobile-menu-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            menuToggle.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                
+                // Change icon based on menu state
+                const icon = menuToggle.querySelector('i');
+                if (mobileMenu.classList.contains('hidden')) {
+                    icon.className = 'ri-menu-line ri-2x';
+                } else {
+                    icon.className = 'ri-close-line ri-2x';
+                }
+            });
+            
+            // Close menu when clicking on mobile nav links
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.add('hidden');
+                    menuToggle.querySelector('i').className = 'ri-menu-line ri-2x';
+                });
+            });
+        });
+    </script>
+
+    <script id="scroll-animation-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.section');
+            
+            function checkVisibility() {
+                sections.forEach(section => {
+                    const sectionTop = section.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (sectionTop < windowHeight * 0.75) {
+                        section.classList.add('visible');
+                    }
+                });
+            }
+            
+            // Check on initial load
+            checkVisibility();
+            
+            // Check on scroll
+            window.addEventListener('scroll', checkVisibility);
+        });
+    </script>
+
+    <script id="navigation-highlight-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+            
+            function highlightNavigation() {
+                let scrollPosition = window.scrollY;
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    const sectionHeight = section.offsetHeight;
+                    const sectionId = section.getAttribute('id');
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('text-primary');
+                            link.classList.add('text-white');
+                            
+                            if (link.getAttribute('href') === `#${sectionId}`) {
+                                link.classList.remove('text-white');
+                                link.classList.add('text-primary');
+                            }
+                        });
+                        
+                        mobileNavLinks.forEach(link => {
+                            link.classList.remove('text-primary');
+                            link.classList.add('text-white');
+                            
+                            if (link.getAttribute('href') === `#${sectionId}`) {
+                                link.classList.remove('text-white');
+                                link.classList.add('text-primary');
+                            }
+                        });
+                    }
+                });
+            }
+            
+            // Highlight on initial load
+            highlightNavigation();
+            
+            // Highlight on scroll
+            window.addEventListener('scroll', highlightNavigation);
+        });
+    </script>
+
+    <script id="smooth-scroll-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('a[href^="#"]');
+            
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        const offsetTop = targetElement.offsetTop;
+                        
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script id="form-validation-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactForm = document.getElementById('contact-form');
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const messageInput = document.getElementById('message');
+            const nameError = document.getElementById('name-error');
+            const emailError = document.getElementById('email-error');
+            const messageError = document.getElementById('message-error');
+            const formSuccess = document.getElementById('form-success');
+            
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                let isValid = true;
+                
+                // Reset errors
+                nameError.classList.add('hidden');
+                emailError.classList.add('hidden');
+                messageError.classList.add('hidden');
+                
+                // Validate name
+                if (nameInput.value.trim() === '') {
+                    nameError.classList.remove('hidden');
+                    isValid = false;
+                }
+                
+                // Validate email
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(emailInput.value.trim())) {
+                    emailError.classList.remove('hidden');
+                    isValid = false;
+                }
+                
+                // Validate message
+                if (messageInput.value.trim() === '') {
+                    messageError.classList.remove('hidden');
+                    isValid = false;
+                }
+                
+                // If valid, show success message
+                if (isValid) {
+                    contactForm.reset();
+                    formSuccess.classList.remove('hidden');
+                    
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        formSuccess.classList.add('hidden');
+                    }, 5000);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
